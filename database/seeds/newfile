@@ -1,0 +1,193 @@
+
+    DB::table('confer_home')->truncate();
+    $sql = file_get_contents(database_path() . '/seeds/confer_home.sql');
+    DB::statement($sql);
+
+
+//    DB::table('active_diploms_special')->truncate();
+//    DB::table('active_diploms_topics')->truncate();
+    
+    Schema::create('active_diploms_special', function(Blueprint $table){
+            $table->increments('id_special');
+            $table->string('num');
+            $table->mediumText('specialization');
+            $table->enum('show', ['y','n']);
+    });
+    
+    sleep(2);
+    
+    Schema::create('active_diploms_topics', function(Blueprint $table){
+      $table->increments('id_dp_thems');
+      $table->integer('id_dp_active');
+      $table->mediumText('title');
+    });
+
+    sleep(2);
+    
+    $sql1 = file_get_contents(database_path() . '/seeds/nmvonafteduua1.sql');
+    $sql2 = file_get_contents(database_path() . '/seeds/nmvonafteduua2.sql');
+    
+    DB::statement($sql1);
+    DB::statement($sql2);
+
+
+DB::table('news_imgs')->truncate();
+      DB::table('news_show')->truncate();
+   
+    DB::table('')->truncate();
+    $sql = file_get_contents(database_path() . '/seeds/nmvonafteduua.sql');
+    DB::statement($sql);
+   
+    DB::table('news_imgs')->truncate();
+    Schema::drop('news_show');
+    sleep(1);
+    Schema::create('news_show', function(Blueprint $table) {
+      $table->increments('id');
+      $table->char('title_news_uk')->nullable();
+      $table->char('title_news_ru')->nullable();
+      $table->char('title_news_en')->nullable();
+      $table->char('title_slug')->nullable();
+      $table->longText('discription_uk')->nullable();
+      $table->longText('discription_ru')->nullable();
+      $table->longText('discription_en')->nullable();
+      $table->timestamps();
+      $table->softDeletes();
+    });
+
+/*
+   DB::table('pages')->truncate();
+   $sql1 = file_get_contents(database_path() . '/seeds/pages.sql');
+   DB::statement($sql1);
+   sleep(2);
+    Schema::dropIfExists('projectopp_category');
+    Schema::dropIfExists('projectopp_comment');
+    Schema::dropIfExists('projectopp_upload_file');
+
+
+
+    Schema::create('projectopp_category', function (Blueprint $table) {
+      $table->increments('id_category');
+      $table->string('slug', 255)->comment('преобразование названия файла');
+      $table->string('title', 255)->comment('названия проекта');
+    });
+
+
+    Schema::create('projectopp_comment', function (Blueprint $table) {
+      $table->increments('id_comment');
+      $table->integer('projectopp_category_id');
+      $table->string('username', 160);
+      $table->longText('comment_text');
+      $table->integer('comment_parent_id')->nullable();
+      $table->timestamps();
+    });
+
+
+    Schema::create('projectopp_upload_file', function (Blueprint $table) {
+      $table->increments('id_upload_file');
+      $table->integer('projectopp_category_id');
+      $table->char('folder', 120);
+      $table->char('title', 160);
+      $table->string('filename', 255);
+      $table->double('size', 22);
+      $table->string('mime_type', 180);
+      $table->timestamps();
+    });
+  }
+
+
+        DB::table('projectopp_category')->truncate();
+    DB::table('projectopp_comment')->truncate();
+    DB::table('projectopp_upload_file')->truncate();
+    Storage::deleteDirectory('upload/160221');
+
+    
+    Schema::table('confer_files', function (Blueprint $table) {
+      $table->dateTime('created_at')->after('type');
+      $table->dateTime('updated_at')->after('created_at');
+    });
+
+    Schema::table('site_files', function (Blueprint $table) {
+      $table->dropColumn('side_page');
+      $table->char('side')->after('page')->default('site');
+    });
+
+///модифицировать столбец
+DB::statement('ALTER TABLE confer_files MODIFY discribtion mediumtext NULL');
+
+///удалить
+DB::statement('DELETE FROM zvit_tablica1 WHERE zvit_year_id=7');
+
+//вставить из одной таблицы в другую
+DB::statement('INSERT INTO `zvit_tablica1` (zvit_year_id,zvit_allokr_id) SELECT id,zvit_year_id FROM `zvit_allokr`');
+
+//вставить колонку в существующей таблицы
+DB::statement('ALTER TABLE active_diploms_topics ADD COLUMN active_year SMALLINT(6) NULL AFTER id_dp_thems');
+
+    
+    
+//    Schema::drop('thems_list_bak');
+//        sleep(2);
+//    Schema::create('thems_list_bak', function(Blueprint $table){
+//            $table->increments('id_diplom');
+//            $table->integer('id_kafedra')->nullable();
+//            $table->text('FIO');
+//            $table->text('specialnist6');
+//            $table->text('osvita')->nullable();
+//            $table->smallInteger('year');
+//            $table->text('exit_kafedra');
+//            $table->text('them_diplom_project');
+//            $table->text('teacher_project');
+//            $table->text('number_nakaz');
+//            $table->text('url_files')->nullable();
+//    });
+    
+    sleep(2);
+    
+    $sql_bak = file_get_contents(database_path() . '/seeds/thems_list_bak.sql');
+    DB::statement($sql_bak);
+//
+//    sleep(2);
+//    
+//    Schema::drop('thems_list_mag');     sleep(2);
+//    Schema::create('thems_list_mag', function(Blueprint $table){
+//            $table->increments('id_diplom');
+//            $table->integer('id_kafedra')->nullable();
+//            $table->text('FIO');
+//            $table->text('specialnist6');
+//            $table->text('osvita')->nullable();
+//            $table->smallInteger('year');
+//            $table->text('exit_kafedra');
+//            $table->text('them_diplom_project');
+//            $table->text('teacher_project');
+//            $table->text('number_nakaz');
+//            $table->text('url_files')->nullable();
+//    });
+    
+    sleep(2);
+    
+    $sql_mag = file_get_contents(database_path() . '/seeds/thems_list_mag.sql');
+    DB::statement($sql_mag);
+    
+//    sleep(2);
+//    
+//    Schema::drop('thems_list_spec');     sleep(2);
+//    Schema::create('thems_list_spec', function(Blueprint $table){
+//            $table->increments('id_diplom');
+//            $table->integer('id_kafedra')->nullable();
+//            $table->text('FIO');
+//            $table->text('specialnist6');
+//            $table->text('osvita')->nullable();
+//            $table->smallInteger('year');
+//            $table->text('exit_kafedra');
+//            $table->text('them_diplom_project');
+//            $table->text('teacher_project');
+//            $table->text('number_nakaz');
+//            $table->text('url_files')->nullable();
+//    });
+//    
+    sleep(2);
+//    
+    $sql_spec = file_get_contents(database_path() . '/seeds/thems_list_spec.sql');
+    DB::statement($sql_spec);
+    
+//    sleep(2);

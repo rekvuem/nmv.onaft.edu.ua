@@ -1,0 +1,20 @@
+/node_modules
+/public/hot
+/public/opp
+/public/photos
+/public/upload
+/public/download
+/public/storage
+/public/download
+/storage/*.key
+/storage/*
+/.idea
+/.vagrant
+/vendor
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+.env
+/resources/views/panel/staff/папка для сотрудников
+.env.example

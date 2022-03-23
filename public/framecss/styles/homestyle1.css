@@ -1,0 +1,31 @@
+/* 
+    Created on : 30.05.2020, 18:56:45
+    Author     : Viktor
+*/
+body{
+  font-size: 12px;
+}
+@media screen and (max-width: 980px){ 
+  .hidden_logotip{
+    display:none; 
+  }
+}
+
+.title-wapka{
+  color: #58a994;
+  font-size: 3.1em;
+  font-weight: bolder;
+  margin-top: 1em;
+}
+
+label {
+  font-weight: 500;
+}
+
+.text-uppercase h2{
+  font-weight: bold;
+}
+
+.nav-group-sub .nav-link{
+  padding: 0.625rem 1.25rem 0.625rem 1rem;
+}
