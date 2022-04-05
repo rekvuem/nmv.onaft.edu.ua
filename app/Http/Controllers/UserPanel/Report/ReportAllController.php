@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\UserPanel\Report;
 
+use App\Models\Reports\Comment;
+use App\Models\Reports\Report;
+use App\Models\User\Information;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -12,9 +15,22 @@ class ReportAllController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return 'отображение обсалютно всех отчетов сотрудников для начальника';
+        if ($request->query('user')) {
+
+            $allReport = Report::with('InformationUser')->where('id_user', $request->query('user'))->orderBy('created_at', 'DESC')->get();
+        }
+        else {
+            $allReport = Report::with('InformationUser')->orderBy('created_at', 'DESC')->get();
+        }
+
+        $listUserDepart = Information::with('UserSelectDepart')->get();
+
+        return view('panel.staff.report.all', compact([
+            'allReport',
+            'listUserDepart'
+        ]));
     }
 
     /**
@@ -30,7 +46,8 @@ class ReportAllController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -41,7 +58,8 @@ class ReportAllController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -52,7 +70,8 @@ class ReportAllController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -63,8 +82,9 @@ class ReportAllController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int                      $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -75,7 +95,8 @@ class ReportAllController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

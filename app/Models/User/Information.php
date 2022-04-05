@@ -23,5 +23,7 @@ class Information extends Model {
     return $this->belongsTo(User::class, 'id', 'user_id');
   }
   
-  
+  public function UserSelectDepart(){
+      return $this->belongsToMany(\App\User::class, 'role_user_departament', 'id','user_id');
+  }
 }

@@ -6,25 +6,21 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 
-class DatabaseSeeder extends Seeder {
+class DatabaseSeeder extends Seeder
+{
 
-  /**
-   * Run the database seeds.
-   *
-   * @return void
-   */
-  public function run() {
-//    DB::table('active_diploms_special')->truncate();
-//
-//    $sql1 = file_get_contents(database_path() . '/seeds/diplom_special.sql');
-//    DB::statement($sql1);
-//
-//    sleep(5);
-//
-//    DB::table('active_diploms_topics')->truncate();
-//
-//    $sql2 = file_get_contents(database_path() . '/seeds/diplom_topic.sql');
-//    DB::statement($sql2);
-  }
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        //удалить таблицу "отсавить заявку на одобрению"
+        //Schema::drop('users_leave_form');
+        //sleep(5);
+        //Schema::drop('migrations');
+        //DB::statement('ALTER TABLE confer_home MODIFY title_conference mediumtext');
+    }
 
 }

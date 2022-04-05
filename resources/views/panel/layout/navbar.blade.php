@@ -3,13 +3,13 @@
 		<!-- Header with logos -->
 		<div class="navbar-header navbar-dark d-none d-md-flex align-items-md-center">
 			<div class="navbar-brand navbar-brand-md">
-				<a href="#" class="d-inline-block"">
+				<a href="{{route('spanel.dashboard')}}" class="d-inline-block"">
 					<img src="{{ asset('framecss/global_assets/images/logo_light.png')}}" alt="">
 				</a>
 			</div>
 			
 			<div class="navbar-brand navbar-brand-xs">
-				<a href="#" class="d-inline-block" >
+				<a href="{{route('spanel.dashboard')}}" class="d-inline-block" >
 				 <img src="{{ asset('framecss/global_assets/images/logo_icon_light.png')}}" alt="">
 				</a>
 			</div>
@@ -19,7 +19,7 @@
 		<!-- Mobile controls -->
 		<div class="d-flex flex-1 d-md-none">
 			<div class="navbar-brand mr-auto">
-				<a href="index.html" class="d-inline-block">
+				<a href=" {{route('spanel.dashboard')}} " class="d-inline-block">
 					<img src="{{ asset('framecss/global_assets/images/logo_light.png')}}" alt="">
 				</a>
 			</div>	

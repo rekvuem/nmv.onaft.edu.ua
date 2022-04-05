@@ -16,6 +16,7 @@ class WelcomeController extends BaseController {
 
     $user         = User::where('id', Auth::id())->first();
     $UserInformer = $user->UserFirstInformation()->first();
+//    $UserDepart = $user->SlugDepart()->get();
 
     $userShortPIB = $UserInformer->familia . " "
         . "" . mb_substr($UserInformer->imya, 0, 1, "UTF-8") . ". "

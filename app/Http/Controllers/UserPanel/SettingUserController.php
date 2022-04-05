@@ -34,10 +34,7 @@ class SettingUserController extends Controller
      */
     public function store(Request $request)
     {
-
-
-        $old_password = $request->input('truepass');
-
+//        $old_password = $request->input('truepass');
         $take_true_password = User::where('id', Auth::id())->first();
 
         if(Hash::check($request->input('truepass'),$take_true_password->password))

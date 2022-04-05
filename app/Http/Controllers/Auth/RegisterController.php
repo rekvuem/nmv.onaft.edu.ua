@@ -94,11 +94,13 @@ class RegisterController extends Controller
             ],
             'department'    => [
                 'required',
-                'string'
+                'string',
+                'regex:/[а-яіА-ЯІ]|[a-zA-Z]/u',
             ],
             'position'      => [
                 'required',
                 'string',
+                'regex:/[а-яіА-ЯІ]|[a-zA-Z]/u',
             ],
             'happy'         => ['required'],
             'accept_terms'  => ['required'],
@@ -154,7 +156,7 @@ class RegisterController extends Controller
         $message   .= "<div style='padding-left: 20px; padding-right:15px; padding-top:25px; padding-bottom:30px; font-size: 1.2em '>";
         $message   .= "Дякуюємо що реєструвалися в особистому кабінеті НЦООП.";
         $message   .= "</div>";
-        $message   .= "<div style='background-color: #455A64; color:white; font-size: 1em; height:80px; padding: 10px 10px 10px 10px'>підвал (тут буде скоро важливі посилання)</div>";
+        $message   .= "<div style='background-color: #455A64; color:white; font-size: 1em; height:80px; padding: 10px 10px 10px 10px'>підвал</div>";
         $message   .= "<em>ОНАХТ</em>";
         $message   .= "</body>";
         $message   .= "</html>";

@@ -82,20 +82,14 @@
             <i class="icon-address-book3"></i><span>Телефонний довідник</span>
           </a>
         </li>
-
-        @if(Gate::check('depart-ucheb'))
+        @if(Gate::check('depart-ucheb') || Gate::check('posit-admin-role'))
           <li class="nav-item-header">
             <div class="text-uppercase font-size-xs line-height-xs">співробітники</div>
             <i class="icon-menu" title="Layout options"></i>
           </li>
           <li class="nav-item">
-            <a href="{{ route('spanel.report.dashboard') }}" class="nav-link">
-              <i class="mi-assignment-turned-in"></i><span>Подати звітность</span>
-            </a>
-          </li>
-          <li class="nav-item">
             <a href="{{ route('spanel.report.myreports') }}" class="nav-link">
-              <i class="mi-aspect-ratio"></i><span>Переглянути звітність</span>
+              <i class="mi-aspect-ratio"></i><span>Подати звітность</span>
             </a>
           </li>
           @can('posit-chief')

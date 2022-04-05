@@ -7,8 +7,6 @@
     @endforeach
     </ul>
   </div>
-
-
 @endif
 
 @if(session('info'))

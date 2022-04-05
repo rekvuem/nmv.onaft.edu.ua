@@ -21,7 +21,6 @@
 
       <ul class="nav nav-tabs nav-tabs-solid nav-justified border-0">
         <li class="nav-item"><a href="#solid-justified-tab1" class="nav-link active" data-toggle="tab">Управління користувачами</a></li>
-        <li class="nav-item"><a href="#solid-justified-tab2" class="nav-link" data-toggle="tab">Заяви на реїстрацію</a></li>
         <li class="nav-item"><a href="#solid-justified-tab3" class="nav-link" data-toggle="tab">Департамент</a></li>
         <li class="nav-item"><a href="#solid-justified-tab4" class="nav-link" data-toggle="tab">Посада</a></li>
       </ul>
@@ -45,19 +44,31 @@
               </thead>
               <tbody>
                 @foreach($userslistInfo as $list) 
-                <tr>
+                <tr @if($list->deleted_at)
+                      style="color:darkred; font-size: 14px; font-weight: bold"
+                        @endif>
                   <td>
                     <div class="btn-group">
                       <a href="{{route('spanel.admin.users.edit', $list->id)}}" class="list-icons-item btn btn-outline bg-blue-700 btn-icon btn-group">
                         <i class="icon-quill2 "></i>
                       </a>
-                      <form action="{{route('spanel.admin.users.destroy', $list->id)}}" method="POST">
-                        {{ csrf_field() }}
-                        {{method_field('DELETE')}}
-                        <button type="submit" class="btn btn-outline bg-danger-600 btn-icon btn-group"><i class="icon-trash"></i></button>
-                      </form>
+
+                      @if($list->deleted_at)
+                        <form action="{{ route('spanel.admin.reestablish', $list->id) }}" method="POST">
+                          {{ csrf_field() }}
+                          {{method_field('PUT')}}
+                          <button type="submit" class="btn btn-outline bg-success-700 btn-icon btn-group"><i class="mi-check"></i></button>
+                        </form>
+                      @else
+                        <form action="{{route('spanel.admin.users.destroy', $list->id)}}" method="POST">
+                          {{ csrf_field() }}
+                          {{method_field('DELETE')}}
+                          <button type="submit" class="btn btn-outline bg-danger-600 btn-icon btn-group"><i class="icon-trash"></i></button>
+                        </form>
+                      @endif
                       <a href="#" class="list-icons-item btn btn-outline bg-slate-700 btn-icon btn-group" data-toggle="modal" data-target="#options_modal">
-                        <i class="icon-cog6"></i></a>
+                        <i class="icon-cog6"></i>
+                      </a>
                     </div>
                   </td>
                   <td>{{ $list->UserFirstInformation['familia'] }}</td>
@@ -81,74 +92,6 @@
           </div>
 
         </div>
-
-        <div class="tab-pane fade" id="solid-justified-tab2">
-          <div class="table-responsive">
-            <table class="table table-responsive-lg table-bordered table-striped table-scrollable bg-light">
-              <thead>
-                <tr class="bg-indigo-400">
-                  <th>функ.</th>
-                  <th>Почта e-mail</th>
-                  <th>П.І.Б.</th>                  
-                  <th>Відділ</th>                 
-                  <th>Посада</th> 
-                  <th>Відповідальний за роботу</th> 
-                  <th>Номер мобільного</th> 
-                  <th>IP відправлення заяви</th> 
-                  <th>Дата відправлення</th> 
-                </tr>
-              </thead>
-              <tbody>
-
-                @foreach($SendUserInfo as $UserLeaveForm)
-                <tr>
-                  <td>
-                    <div class="btn-group">
-
-                      <form action="{{route('spanel.admin.user_status', $UserLeaveForm->id)}}" method="POST">
-                        {{ csrf_field() }}
-                        {{method_field('GET')}}
-                        <div class="input-group">
-                          <input type="text" name="password" class="form-control" value="">
-                          <span class="input-group-append">
-                            <button type="submit" class="btn btn-light legitRipple btn-icon" type="button"><i class="icon-quill2"></i></button>
-                          </span>
-                        </div>
-                      </form>                      
-<!--<a href="{{route('spanel.admin.user_status', $UserLeaveForm->id)}}" class="btn btn-sm btn-icon" title="Одобрено"><i class="icon-user-check"></i></a>-->
-                      <a href="{{route('mail.cancelMSG', $UserLeaveForm->email)}}" class="btn btn-sm btn-icon" title="Відмова"><i class="icon-user-block"></i></a>
-                      <a href="{{route('spanel.admin.user_delete', $UserLeaveForm->id)}}" class="btn btn-sm btn-icon" title="Видалити"><i class="icon-user-cancel"></i></a>
-                    </div>
-                  </td>
-                  <td>
-                    <div>
-                      {{$UserLeaveForm->email}}
-                    </div>
-                    <div>
-                      @if($UserLeaveForm->check_user_form == 'очікування')
-                      <span class="text-indigo-700 text-bold text-uppercase">очікування</span>
-                      @elseif($UserLeaveForm->check_user_form == 'одобрено')  
-                      <span class="text-green-700 text-bold text-uppercase">одобрено</span>
-                      @elseif($UserLeaveForm->check_user_form == 'відміна')
-                      <span class="text-warning-700 text-bold text-uppercase">відміна</span>
-                      @elseif($UserLeaveForm->check_user_form == 'видалити')
-                      <span class="text-danger-700 text-bold text-uppercase">видалити</span>
-                      @endif
-                    </div>
-                  </td>
-                  <td>{{$UserLeaveForm->familia}} {{$UserLeaveForm->imya}} {{$UserLeaveForm->otchestvo}}</td>                  
-                  <td>{{$UserLeaveForm->department}}</td>                 
-                  <td>{{$UserLeaveForm->position}}</td> 
-                  <td>{{$UserLeaveForm->responsible}}</td> 
-                  <td>{{$UserLeaveForm->number_mobile}}</td> 
-                  <td>{{$UserLeaveForm->ip_form_send}}</td> 
-                  <td>{{date('d.m.Y H:s', strtotime($UserLeaveForm->creeate_at))}}</td> 
-                </tr>
-                @endforeach
-              </tbody>
-            </table>
-          </div>
-        </div>        
 
         <div class="tab-pane fade" id="solid-justified-tab3">
           <div class="row">

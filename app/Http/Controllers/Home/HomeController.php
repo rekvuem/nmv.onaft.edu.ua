@@ -92,57 +92,11 @@ class HomeController extends BaseController {
     return back();
   }
 
-  // оставить форму для подверждения регистрации
-  public function leave_reg_form() {
-    return view('auth.leave_form');
-//    return abort(403, 'Форма тим часово недоступна.');
-  }
-
   public function dobro(Request $req) {
     $page       = $req->query('dobro');
     $SelectPage = Pages::where('page', $page)->first();
     $UploadFile = UploadFiles::where('page', $page)->orderBy('updated_at', 'ASC')->get();
     return view('home.dobro', compact(['SelectPage', 'UploadFile']));
-  }
-
-  public function insert_reg_form(Request $request) {
-
-
-    $messages = [
-      'familia.regex'   => 'Вибачте, :input але такий вид даних не підтримується',
-      'imya.regex'      => 'Вибачте, :input але такий вид даних не підтримується',
-      'otchestvo.regex' => 'Вибачте, :input але такий вид даних не підтримується',
-    ];
-
-    $rules = [
-      'email'         => 'required|email',
-      'familia'       => ['required', 'string', 'regex:/[а-яіА-ЯІ]|[a-zA-Z]/u'],
-      'imya'          => ['required', 'string', 'regex:/[а-яіА-ЯІ]|[a-zA-Z]/u'],
-      'otchestvo'     => ['required', 'string', 'regex:/[а-яіА-ЯІ]|[a-zA-Z]/u'],
-      'department'    => ['required', 'string', 'regex:/[а-яіА-ЯІ]|[a-zA-Z]/u'],
-      'position'      => ['required', 'string', 'regex:/[а-яіА-ЯІ]|[a-zA-Z]/u'],
-      'responsible'   => ['required', 'string', 'regex:/[а-яіА-ЯІ]|[a-zA-Z]/u'],
-      'number_mobile' => ['regex:/(01)[0-9]{9}/'],
-    ];
-
-    $validator = Validator::make($request->all(), $rules, $messages)->validate();
-
-    $request->session()->flash('info', 'Додано!');
-
-    DB::table('users_leave_form')->insert([
-      'email'         => $request->email,
-      'familia'       => $request->familia,
-      'imya'          => $request->imya,
-      'otchestvo'     => $request->otchestvo,
-      'department'    => $request->department,
-      'position'      => $request->position,
-      'responsible'   => $request->responsible,
-      'number_mobile' => $request->num_mobile,
-      'ip_form_send'  => $request->ip(),
-      'creeate_at'    => now(),
-    ]);
-
-    return redirect()->route('mail.helloMSG', [$request->email]);
   }
 
   //Відкриті лекції

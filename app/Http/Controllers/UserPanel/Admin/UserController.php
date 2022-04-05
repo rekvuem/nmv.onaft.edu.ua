@@ -22,15 +22,13 @@ class UserController extends BaseController
     public function index()
     {
         $userslistInfo = User::with('UserFirstInformation')
-                             ->get();
-        $SendUserInfo  = DB::table('users_leave_form')
-                           ->get();
+            ->withTrashed()
+            ->get();
         $Departament   = Departament::get();
         $Position      = Position::get();
 
         return view('panel.admin.users.users', compact([
             'userslistInfo',
-            'SendUserInfo',
             'Departament',
             'Position',
         ]));
@@ -100,6 +98,18 @@ class UserController extends BaseController
 
         return redirect()->route('spanel.admin.users.index');
     }
+
+    public function reestablish($id)
+    {
+
+        $u=User::where('id', $id)->withTrashed()->update([
+            'deleted_at' => null,
+        ]);
+
+        return back();
+    }
+
+
 
     /**
      * Show the form for editing the specified resource.

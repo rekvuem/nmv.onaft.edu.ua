@@ -60,9 +60,7 @@ Route::group([
     Route::get('/aboutworker', 'HomeController@aboutworker')->name('home.workers');
     //Документация
     Route::get('/documantation', 'DocumController@index')->name('home.docum');
-    /* форма заявки на регистрацию пользвателя */
-    Route::get('/leave_register_form', 'HomeController@leave_reg_form')->name('home.leaveRegForm');
-    Route::post('/insert_form_user', 'HomeController@insert_reg_form')->name('home.InsertRegForm');
+
     /* структура страниц с префиксом /plane/ */
     Route::get('/plane', 'Plane\PlaneController@index')->name('home.plane');
     /* отдельная страница для олимпиады  */
@@ -126,10 +124,19 @@ Route::namespace('UserPanel')->prefix('/spanel')->name('spanel.')->middleware([
     Route::put('/setting_pass', 'SettingUserController@store')->name('setting.pass'); // сохранение измененного пароля
 
     Route::namespace('Report')->prefix('/report')->name('report.')->group(function () {
-        Route::get('/', 'ReportUserController@index')->name('dashboard');
         Route::get('/myreport', 'ReportShowController@index')->name('myreports');
+        Route::post('/myreport', 'ReportShowController@create')->name('create.report');
+        Route::get('/myreport/edit/{id}', 'ReportShowController@edit')->name('editor.report');
+        Route::put('/myreport/udpate/{id}', 'ReportShowController@update')->name('update.report');
+        Route::get('/myreport/delete/{id}', 'ReportShowController@destroy')->name('delete.report');
+        Route::post('/myreport/addreport', 'ReportShowController@addreport')->name('addreport');
+        Route::get('/myreport/show/{date}', 'ReportShowController@show')->name('showreport');
+
+        Route::post('/report/add/comment', 'ReportCommentController@create')->name('comment.add');
+        Route::get('/report/delete/{idcomment}/comment', 'ReportCommentController@destroy')->name('comment.delete');
 
         Route::middleware('can:posit-chief')->get('/allreport', 'ReportAllController@index')->name('allreports');
+
     });
 
 
